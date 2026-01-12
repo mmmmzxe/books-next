@@ -10,7 +10,6 @@ export async function GET(
   { params }: { params: Promise<{ id: string }> }
 ) {
   try {
-    await requireAuth();
     const { id } = await params;
 
     // Mock book retrieval (in production, use a database)

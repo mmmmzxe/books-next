@@ -84,8 +84,7 @@ export async function GET(request: Request) {
       pageSize,
     });
   } catch {
-
-    return NextResponse.json({ message: 'Unauthorized' }, { status: 401 });
+    return NextResponse.json({ message: 'Failed to fetch books' }, { status: 500 });
   }
 }
 

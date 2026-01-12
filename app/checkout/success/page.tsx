@@ -2,13 +2,11 @@
 
 
 import { Button, useToast } from '@/shared/ui';
-import { CheckCircle2, ShoppingBag, ArrowRight, Download, Package } from 'lucide-react';
+import { CheckCircle2, ShoppingBag, ArrowRight, Download } from 'lucide-react';
 import Link from 'next/link';
-import { useRouter } from 'next/navigation';
 import { ROUTES } from '@/core';
 
 export default function OrderSuccessPage() {
-  const router = useRouter();
   const { addToast } = useToast();
   // Generate random order ID
   // Fixed order ID for mock success page (to maintain purity)
@@ -16,12 +14,6 @@ export default function OrderSuccessPage() {
 
 
 
-  const handleTrackOrder = () => {
-    addToast('Redirecting to your orders...', 'info');
-    setTimeout(() => {
-      router.push(ROUTES.MY_BOOKS);
-    }, 1000);
-  };
 
   const handleDownloadInvoice = () => {
     addToast('Your invoice is being prepared for download.', 'success');

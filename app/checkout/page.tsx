@@ -4,7 +4,7 @@ import { useCart } from '@/shared/providers';
 import { Button, Input, Card, CardContent } from '@/shared/ui';
 import { ArrowLeft, CreditCard, Truck, ShieldCheck } from 'lucide-react';
 import { useRouter } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { ROUTES } from '@/core';
 
 export default function CheckoutPage() {
@@ -27,8 +27,13 @@ export default function CheckoutPage() {
     }, 1500);
   };
 
+  useEffect(() => {
+    if (cart.length === 0 && !isSubmitting) {
+      router.push(ROUTES.CART);
+    }
+  }, [cart, isSubmitting, router]);
+
   if (cart.length === 0 && !isSubmitting) {
-    router.push(ROUTES.CART);
     return null;
   }
 

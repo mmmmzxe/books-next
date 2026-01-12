@@ -18,7 +18,7 @@ export const ARTICLES: Article[] = [
     author: 'Elena Vance',
     readTime: '5 min read',
     category: 'Latest',
-    image: '/images/article/5.jpg'
+    image: 'https://i.postimg.cc/9FB4Hm62/5.jpg'
   },
   {
     id: 'a2',
@@ -28,7 +28,7 @@ export const ARTICLES: Article[] = [
     author: 'Julian Barnes',
     readTime: '7 min read',
     category: 'Trending',
-    image: '/images/article/4.jpg'
+    image: 'https://i.postimg.cc/SNGXbSww/4.jpg'
   },
   {
     id: '1',
@@ -38,7 +38,7 @@ export const ARTICLES: Article[] = [
     author: 'Elena Vance',
     readTime: '8 min read',
     category: 'Lifestyle',
-    image: '/images/article/1.jpg'
+    image: 'https://i.postimg.cc/0jDww7WB/1.jpg'
   },
   {
     id: '2',
@@ -48,7 +48,7 @@ export const ARTICLES: Article[] = [
     author: 'Julian Barnes',
     readTime: '6 min read',
     category: 'Culture',
-    image: '/images/article/2.jpg'
+    image: 'https://i.postimg.cc/Jz4srwL9/2.jpg'
   },
   {
     id: '3',
@@ -58,6 +58,6 @@ export const ARTICLES: Article[] = [
     author: 'Sarah Chen',
     readTime: '12 min read',
     category: 'Literature',
-    image: '/images/article/3.jpg'
+    image: 'https://i.postimg.cc/Yqx4BrJN/3.jpg'
   }
 ];

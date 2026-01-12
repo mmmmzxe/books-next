@@ -12,7 +12,7 @@ const SLIDES = [
     title: 'Life Of The Wild',
     description:
       'Lorem ipsum dolor sit amet, consectetur adipiscing elit. Sed eu feugiat amet, libero ipsum enim pharetra hac. Urna commodo, lacus ut magna velit eleifend.',
-    image: '/images/books/book.png',
+    image: 'https://i.postimg.cc/V656wzBf/book.png',
     accentColor: '#222222',
   },
   {
@@ -20,7 +20,7 @@ const SLIDES = [
     title: 'Birds of Paradise',
     description:
       "Exploring the vibrant plumage and complex mating dances of the world's most beautiful avian species in their natural habitat.",
-    image: '/images/books/book-2.png',
+    image: 'https://i.postimg.cc/0NVQhzmy/book-2.png',
     accentColor: '#74642F',
   },
 ];

@@ -3,35 +3,30 @@
 import Image from 'next/image';
 
 const brandImages = [
-  { file: '1.png' },
-  { file: '2.png' },
-  { file: '3.png' },
-  { file: '4.png' },
-  { file: '5.png' },
+  { url: 'https://i.postimg.cc/wTYWb2pm/1.png', label: 'Brand 1' },
+  { url: 'https://i.postimg.cc/pXM01CH8/2.png', label: 'Brand 2' },
+  { url: 'https://i.postimg.cc/Wbc9f8v0/3.png', label: 'Brand 3' },
+  { url: 'https://i.postimg.cc/X762DLbd/4.png', label: 'Brand 4' },
+  { url: 'https://i.postimg.cc/yYCfrjHm/5.png', label: 'Brand 5' },
 ];
-
-function getLabelFromFilename(filename: string) {
-  const name = filename.replace(/\.[^/.]+$/, '');
-  return `Brand ${name}`;
-}
 
 export function CategoriesSection() {
   return (
     <section className="bg-[#F3F2EC] py-20 border-b border-black/5">
       <div className="max-w-7xl mx-auto px-4">
         <div className="flex flex-wrap items-center justify-center gap-12 md:gap-24 transition-opacity">
-          {brandImages.map((brand) => (
-            <div key={brand.file} className="flex flex-col items-center">
+          {brandImages.map((brand, index) => (
+            <div key={index} className="flex flex-col items-center">
               <div className="relative mb-1 h-20 w-20">
                 <Image
-                  src={`/images/brands/${brand.file}`}
-                  alt={getLabelFromFilename(brand.file)}
+                  src={brand.url}
+                  alt={brand.label}
                   fill
                   className="object-contain"
                 />
               </div>
               <span className="text-[10px] font-bold uppercase tracking-[0.2em] text-[#222222]">
-                {getLabelFromFilename(brand.file)}
+                {brand.label}
               </span>
             </div>
           ))}

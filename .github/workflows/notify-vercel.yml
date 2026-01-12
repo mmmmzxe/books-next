@@ -1,0 +1,13 @@
+name: "notify vercel"
+on:
+  repository_dispatch:
+    types: [status]
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Vercel - books-next: lint"
+        uses: "vercel/repository-dispatch/actions/status@v1"
+        with:
+          name: "Vercel - books-next: lint"

@@ -1,13 +1,12 @@
 'use client';
 
 import Link from 'next/link';
-import { usePathname, useRouter } from 'next/navigation';
+import { usePathname } from 'next/navigation';
 import { ShoppingCart, User, LogOut, Search, Facebook, Instagram, Linkedin, Twitter, Menu, Heart, X } from 'lucide-react';
-import { useSession, useLogout } from '@/domains/auth';
-import { useCart, useFavorites } from '@/shared/providers';
+import { useSession } from '@/domains/auth';
 import { ROUTES } from '@/core';
-import { useState, useEffect, useRef } from 'react';
 import { SearchPopup } from './search-popup';
+import { useNavbar } from '../../hooks/use-navbar';
 
 
 function NavLinks({ onLinkClick }: { onLinkClick?: () => void }) {
@@ -30,45 +29,29 @@ function NavLinks({ onLinkClick }: { onLinkClick?: () => void }) {
 }
 
 export function Navbar() {
-  const pathname = usePathname();
-  const router = useRouter();
-  const { data: user, isLoading } = useSession();
-  const { mutate: logout } = useLogout();
-
-  const { getCartCount } = useCart();
-  const { favorites } = useFavorites();
-  const [isProfileMenuOpen, setIsProfileMenuOpen] = useState(false);
-  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
-  const [isSearchOpen, setIsSearchOpen] = useState(false);
-  const menuRef = useRef<HTMLDivElement>(null);
-
-  useEffect(() => {
-    function handleClickOutside(event: MouseEvent) {
-      if (menuRef.current && !menuRef.current.contains(event.target as Node)) {
-        setIsProfileMenuOpen(false);
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside);
-    return () => {
-      document.removeEventListener('mousedown', handleClickOutside);
-      document.body.style.overflow = 'unset'; // Cleanup scroll lock
-    };
-  }, []);
-
-  // Lock scroll when mobile menu or search is open
-  useEffect(() => {
-    if (isMobileMenuOpen || isSearchOpen) {
-      document.body.style.overflow = 'hidden';
-    } else {
-      document.body.style.overflow = 'unset';
-    }
-  }, [isMobileMenuOpen, isSearchOpen]);
+  const {
+    user,
+    isLoading,
+    pathname,
+    logout,
+    getCartCount,
+    favorites,
+    isProfileMenuOpen,
+    isMobileMenuOpen,
+    isSearchOpen,
+    menuRef,
+    toggleProfileMenu,
+    closeMobileMenu,
+    openMobileMenu,
+    openSearch,
+    closeSearch,
+  } = useNavbar();
 
   if (pathname === ROUTES.LOGIN) return null;
 
   return (
     <header className="w-full bg-[#F3F2EC]">
-      <SearchPopup isOpen={isSearchOpen} onClose={() => setIsSearchOpen(false)} />
+      <SearchPopup isOpen={isSearchOpen} onClose={closeSearch} />
       {/* 1. TOP UTILITY BAR - Hidden on extra small screens, icons hidden on mobile */}
       <div className="flex w-full items-center justify-between border-b border-black/5 px-4 md:px-8 py-3 text-[10px] font-medium tracking-[0.2em] text-[#7A7A7A]">
         {/* Social Icons - Desktop Only */}
@@ -89,13 +72,7 @@ export function Navbar() {
               </div>
             ) : (
               <button 
-                onClick={() => {
-                  if (user) {
-                    setIsProfileMenuOpen(!isProfileMenuOpen);
-                  } else {
-                    router.push(ROUTES.LOGIN);
-                  }
-                }}
+                onClick={toggleProfileMenu}
                 className="flex items-center gap-1 hover:text-black transition-colors"
               >
                 <User size={14} /> 
@@ -123,7 +100,7 @@ export function Navbar() {
           </Link>
 
           <button 
-            onClick={() => setIsSearchOpen(true)}
+            onClick={openSearch}
             className="flex items-center gap-1 hover:text-black transition-colors"
             aria-label="Open search"
           >
@@ -147,24 +124,24 @@ export function Navbar() {
         {/* Mobile Menu Toggle */}
         <button 
           className="lg:hidden text-black p-2"
-          onClick={() => setIsMobileMenuOpen(true)}
+          onClick={openMobileMenu}
         >
           <Menu size={24} />
         </button>
       </nav>
 
       {/* 3. MOBILE OVERLAY MENU */}
-      <div className={`fixed inset-0 z-100 bg-black/40 transition-opacity duration-300 lg:hidden ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`} onClick={() => setIsMobileMenuOpen(false)}>
+      <div className={`fixed inset-0 z-100 bg-black/40 transition-opacity duration-300 lg:hidden ${isMobileMenuOpen ? 'opacity-100 visible' : 'opacity-0 invisible'}`} onClick={closeMobileMenu}>
         <div 
           className={`absolute right-0 top-0 h-full w-[280px] bg-white p-8 transition-transform duration-300 ease-in-out ${isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'}`}
           onClick={(e) => e.stopPropagation()}
         >
           <div className="flex justify-between text-black items-center mb-12">
             <span className="font-serif text-xl">MENU</span>
-            <button onClick={() => setIsMobileMenuOpen(false)}><X size={24} /></button>
+            <button onClick={closeMobileMenu}><X size={24} /></button>
           </div>
           <div className="flex flex-col gap-8 text-[12px] font-bold tracking-[0.2em] text-[#7A7A7A]">
-            <NavLinks onLinkClick={() => setIsMobileMenuOpen(false)} />
+            <NavLinks onLinkClick={closeMobileMenu} />
           </div>
         </div>
       </div>

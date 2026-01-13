@@ -21,6 +21,19 @@ export const metadata: Metadata = {
   authors: [{ name: "Booksaw Team" }],
   creator: "Booksaw Team",
   publisher: "Booksaw",
+  themeColor: [{ media: "(prefers-color-scheme: light)", color: "#FAF9F9" }, { media: "(prefers-color-scheme: dark)", color: "#1A1A1A" }],
+  icons: {
+    icon: [
+      { url: "/logo.png", sizes: "32x32", type: "image/png" },
+      { url: "/logo.png", sizes: "16x16", type: "image/png" },
+      { url: "/favicon.ico", sizes: "any" }
+    ],
+    apple: "/apple-touch-icon.png",
+    other: [
+      { rel: "manifest", url: "/site.webmanifest" },
+      { rel: "mask-icon", url: "/safari-pinned-tab.svg", color: "#5bbad5" }
+    ]
+  },
   openGraph: {
     type: "website",
     locale: "en_US",

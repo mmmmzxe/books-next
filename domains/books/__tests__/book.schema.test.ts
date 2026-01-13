@@ -293,6 +293,19 @@ describe('Book Schemas', () => {
       const result = createBookSchema.safeParse(invalidData);
       expect(result.success).toBe(false);
     });
+
+    it('should accept numeric-like strings for price', () => {
+      const validData = {
+        title: 'Numeric Price',
+        description: 'Testing string price',
+        price: '29.99',
+        category: 'Technology',
+        thumbnail: '/images/books/book.png',
+      };
+
+      const result = createBookSchema.safeParse(validData);
+      expect(result.success).toBe(true);
+    });
   });
 
   describe('updateBookSchema', () => {
@@ -303,6 +316,20 @@ describe('Book Schemas', () => {
 
       const result = updateBookSchema.safeParse(validData);
       expect(result.success).toBe(true);
+    });
+
+    it('should accept empty strings and string numbers for optional fields', () => {
+      const validData1 = {
+        title: '', // empty -> treated as undefined
+        price: '', // empty -> treated as undefined
+      };
+
+      const validData2 = {
+        price: '39.50', // string -> number
+      };
+
+      expect(updateBookSchema.safeParse(validData1).success).toBe(true);
+      expect(updateBookSchema.safeParse(validData2).success).toBe(true);
     });
   });
 

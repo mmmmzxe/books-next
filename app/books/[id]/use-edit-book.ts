@@ -1,6 +1,6 @@
 "use client";
 
-import { useForm } from 'react-hook-form';
+import { useForm, type SubmitHandler, type Resolver } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { useBook, useUpdateBook, updateBookSchema, type UpdateBookFormData } from '@/domains/books';
 import { useToast } from '@/shared/ui';
@@ -24,7 +24,7 @@ export function useEditBook(bookId: string) {
     reset,
     watch,
   } = useForm<UpdateBookFormData>({
-    resolver: zodResolver(updateBookSchema),
+    resolver: zodResolver(updateBookSchema) as Resolver<UpdateBookFormData>,
   });
 
   // Populate form when book data loads
@@ -40,7 +40,7 @@ export function useEditBook(bookId: string) {
     }
   }, [book, reset]);
 
-  const onSubmit = (data: UpdateBookFormData) => {
+  const onSubmit: SubmitHandler<UpdateBookFormData> = (data) => {
     updateBook(
       { id: bookId, data },
       {

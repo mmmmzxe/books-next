@@ -1,6 +1,6 @@
  "use client";
  
- import { useForm } from 'react-hook-form';
+import { useForm, type SubmitHandler, type Resolver } from 'react-hook-form';
  import { zodResolver } from '@hookform/resolvers/zod';
  import { useCreateBook, createBookSchema, type CreateBookFormData } from '@/domains/books';
  import { useToast } from '@/shared/ui';
@@ -19,10 +19,10 @@
      formState: { errors },
      watch,
    } = useForm<CreateBookFormData>({
-     resolver: zodResolver(createBookSchema),
-   });
- 
-   const onSubmit = (data: CreateBookFormData) => {
+    resolver: zodResolver(createBookSchema) as Resolver<CreateBookFormData>,
+  });
+
+  const onSubmit: SubmitHandler<CreateBookFormData> = (data) => {
      createBook(data, {
        onSuccess: () => {
          addToast('Book created successfully!', 'success');
